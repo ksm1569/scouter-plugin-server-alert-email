@@ -315,13 +315,16 @@ public class EmailPlugin {
 
                 alert(ap);
             }else if(pack.error != 0) {
+                String serviceName = TextRD.getString(DateUtil.yyyymmdd(pack.endTime), TextTypes.SERVICE, pack.service);
+
                 String date = DateUtil.yyyymmdd(pack.endTime);
                 String service = TextRD.getString(date, TextTypes.SERVICE, pack.service);
                 AlertPack ap = new AlertPack();
                 ap.level = AlertLevel.ERROR;
                 ap.objHash = pack.objHash;
                 ap.title = "xlog Error";
-                ap.message = "서비스 에러 : " + pack.service + TextRD.getString(date, TextTypes.ERROR, pack.error);
+                ap.message = "서비스 에러 : " + pack.service + "(" + serviceName + ")" + "\n" +
+                              TextRD.getString(date, TextTypes.ERROR, pack.error);
                 ap.time = System.currentTimeMillis();
                 ap.objType = AgentManager.getAgent(pack.objHash).objType;;
                 alert(ap);
